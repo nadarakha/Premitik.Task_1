@@ -1,0 +1,65 @@
+﻿@model PagedList.IPagedList<Premitik.Task_1.Models.TaskViewModel>
+@using PagedList.Mvc;
+@{ Layout = null;}
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<table class="table table-striped">
+    <tr>
+        <th> <input type="checkbox" /></th>
+        <th>
+           Subject
+        </th>
+        <th>
+         Status
+        </th>
+        <th>
+            Case Num
+        </th>
+        <th>
+            Source
+        </th>
+        
+        <th>
+           Customer Num
+        </th>
+
+        <th>
+           Release Num
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td>
+                @{ var selectList = new SelectList(ViewBag.Status, "Id", "Name", item.Status.Id);
+                        }
+
+                        @Html.DropDownListFor(modelItem => item.Status.Id, selectList, new { style = "background-color:" + item?.Status?.Color })
+
+                    </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CaseNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Source)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleaseNumber)
+            </td>
+        </tr>
+    }
+</table>
+<div id='Paging' style="text-align:center">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount
+    
+    @Html.PagedListPager(Model, page => Url.Action("Index",new { page}), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing( new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "taskTableResult", }))
+</div>

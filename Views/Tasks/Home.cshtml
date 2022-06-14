@@ -1,0 +1,100 @@
+﻿
+@{ 
+    ViewBag.Title = "Home";
+}
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+
+                <input type="button" value="Create" class="btn btn-default" id="submit" />
+                <button type="button" class="close" data-dismiss="modal">
+                    ×
+                </button>
+            </div>
+
+
+            <div class="modal-body" id="result">
+
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="div1">
+    <div class="row"><span class="text-right col-sm-12"> <button id="btnShowModal">Add</button></span></div>
+    <div class="row">
+        <div class="col-sm-6">
+            <span> Show</span> <input type="number" id="limitNumber" min="1" value="1" /> entiers
+        </div>
+        <div class="col-sm-6 text-right">
+            <span>Search </span><input type="text" id="textSearch" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-12" id="taskTableResult">
+            @Html.Action("Index");
+
+            
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $("#btnShowModal").click(function () {
+        $.ajax({
+            url: "Create", success: function (result) {
+                $("#result").html(result);
+            }
+        });
+        $("#myModal").modal('show');
+    });
+
+    $("#submit").click(function () {
+        if ($("#form").valid()) {
+            $("#form").submit();
+            
+        }
+       
+        
+    })
+    
+    $("#textSearch").keypress(function (event) {
+
+
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            $.ajax({
+                data: { searchText: $("#textSearch").val(), pageSize:$("#limitNumber").val(), page:1 },
+                url: "Index", success: function (result) {
+                    $("#taskTableResult").html(result);
+                }
+            });
+        }
+    })
+
+
+
+    $("#limitNumber").keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            $.ajax({
+                data: { pageSize: $("#limitNumber").val(), searchText:"" },
+                url: "Index", success: function (result) {
+                    $("#taskTableResult").html(result);
+                }
+            });
+        }
+    }
+)
+
+</script>

@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>.font-link a,select{color:gray!important}
+        a {
+            color: gray !important
+        }</style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row font-link">
+            <span class="col-sm-8"></span>
+            <span class="col-sm-2 text-right">  @Html.ActionLink("Contact Us", "", "Tasks")</span>
+            <span class="col-sm-1 text-center">   @Html.ActionLink("Home", "Home", "Tasks")</span>
+            <span class="col-sm-1 text-center">  <select><option>EN</option><option>AR</option><option>FR</option></select></span>
+        </div>
+    </div>
+    <br />
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <div class="container body-content">
+
+        @RenderBody()
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
